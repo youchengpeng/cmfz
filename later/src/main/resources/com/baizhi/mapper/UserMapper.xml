@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.mapper.UserMapper">
+    <select id="queryUserGBPandSex" resultType="com.baizhi.DTO.UserChartsDto" parameterType="int">
+    <![CDATA[
+        select count(*) as value,province name
+        from user
+        where sex = #{sex}
+        group by province
+        ]]>
+    </select>
+</mapper>

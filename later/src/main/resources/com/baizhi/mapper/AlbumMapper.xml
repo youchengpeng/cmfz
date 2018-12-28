@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.mapper.AlbumMapper">
+    <resultMap type="Album" id="r1">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="count" property="count"></result>
+        <result column="cover_img" property="cover_img"></result>
+        <result column="score" property="score"></result>
+        <result column="author" property="author"></result>
+        <result column="broadcast" property="broadcast"></result>
+        <result column="brief" property="brief"></result>
+        <result column="pub_date" property="pub_date"></result>
+        <collection property="children" ofType="Chapter">
+            <id column="cid" property="id"></id>
+            <result column="ctitle" property="title"></result>
+            <result column="csize" property="size"></result>
+            <result column="cduration" property="duration"></result>
+            <result column="curl" property="url"></result>
+            <result column="cud" property="upload_date"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="queryAllByPage" resultMap="r1">
+        select a.*,c.id cid,c.title ctitle,c.size csize,c.duration cduration,c.url curl,c.upload_date cud
+        from album a
+                 LEFT JOIN chapter c ON a.id = c.alb_id
+             LIMIT
+             #{start},
+             #{rows}
+    </select>
+
+
+    <resultMap type="Album" id="r2">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="count" property="count"></result>
+        <result column="cover_img" property="cover_img"></result>
+        <result column="score" property="score"></result>
+        <result column="author" property="author"></result>
+        <result column="broadcast" property="broadcast"></result>
+        <result column="brief" property="brief"></result>
+        <result column="pub_date" property="pub_date"></result>
+        <collection property="children" ofType="Chapter">
+            <id column="cid" property="id"></id>
+            <result column="ctitle" property="title"></result>
+            <result column="csize" property="size"></result>
+            <result column="cduration" property="duration"></result>
+            <result column="curl" property="url"></result>
+            <result column="cud" property="upload_date"></result>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="r2">
+        select a.*,c.id cid,c.title ctitle,c.size csize,c.duration cduration,c.url curl,c.upload_date cud
+        from album a
+                 LEFT JOIN chapter c ON a.id = c.alb_id
+    </select>
+
+</mapper>

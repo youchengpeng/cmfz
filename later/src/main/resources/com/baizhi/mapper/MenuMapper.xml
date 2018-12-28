@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.mapper.MenuMapper">
+    <resultMap type="Menu" id="r1">
+        <id column="mid" property="id"></id>
+        <result column="mtitle" property="title"></result>
+        <result column="miconcls" property="iconcls"></result>
+        <result column="murl" property="url"></result>
+        <collection property="son" ofType="com.baizhi.entity.Menu">
+            <id column="nid" property="id"></id>
+            <result column="ntitle" property="title"></result>
+            <result column="niconcls" property="iconcls"></result>
+            <result column="nurl" property="url"></result>
+        </collection>
+
+    </resultMap>
+
+    <select id="queryAll" resultMap="r1">
+        select m.id      mid,
+               m.title   mtitle,
+               m.iconcls miconcls,
+               m.url     murl,
+               n.id      nid,
+               n.title   ntitle,
+               n.iconcls niconcls,
+               n.url     nurl
+        from menu m
+                 LEFT JOIN menu n on m.id = n.parent_id
+        where m.parent_id IS NULL
+    </select>
+
+</mapper>
